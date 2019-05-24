@@ -163,8 +163,14 @@ class SeekerController extends Controller
     }
     //Seeker Job view page
     public function viewJob($id){
+        $user = auth()->user();
+        $job = $user->many_job()->where('job_id',$id)->first();
+        $applied = false;
+        if($job){
+            $applied = true;
+        }
         $jobData = Job::find($id);
-        return view('jobseeker.seeker_job_view', compact('jobData'));
+        return view('jobseeker.seeker_job_view', compact('jobData','applied'));
     }
      //Shows the Find jobs page with available jobs
     public function showFindJobs(){
@@ -185,8 +191,8 @@ class SeekerController extends Controller
     }
     //seeker delete an applied job from dashboard
     public function deleteJob($id){
-        $user = User::find(Auth::id());
-        $user->many_job()->detach($id);
+        $user = auth()->user();
+        $user->many_job()->detach(['job_id' => $id]);
          return redirect()->route('seeker.dashboard');
      } 
      //Show Category wise jobs

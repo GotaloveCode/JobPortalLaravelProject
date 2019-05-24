@@ -61,16 +61,28 @@
                     
                     <div class="row">
                         <div class="col-lg-2 col-lg-offset-3">
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-6 col-sm-10">
-                                            <a href="/seeker/job/apply/{{$jobData->id}}" class="btn btn-warning">APPLY NOW</a><br><br>
-                                        </div>
+                            @if($applied)
+                                <div class="form-group">
+                                    <div class="col-sm-offset-6 col-sm-10">
+                                        <Button class="btn btn-default"><i class="glyphicon glyphicon-check"></i> APPLIED</Button><br><br>
                                     </div>
+                                </div>
+                            @else
+                                <div class="form-group">
+                                    <div class="col-sm-offset-6 col-sm-10">
+                                        <a href="/seeker/job/apply/{{$jobData->id}}" class="btn btn-warning">
+                                            APPLY NOW
+                                        </a><br><br>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <div class="col-lg-2">
                                     <div class="form-group">
                                         <div class="col-sm-offset-6 col-sm-10">
-                                            <a href="{{route('seeker.find_jobs')}}" class="btn btn-primary">SEE MORE JOBS</a><br><br>
+                                            <a href="{{route('seeker.find_jobs')}}" class="btn btn-primary">
+                                                <i class="glyphicon glyphicon-eye-open"></i>
+                                                 View More Jobs</a><br><br>
                                         </div>
                                     </div>
                         </div>
