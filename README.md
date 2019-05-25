@@ -1,9 +1,14 @@
 # JobPortal Laravel Project
 
-### This is a job portal web app developed by me for my Final semester project. 
+### Instructions
 
-### This Application is fully functional as a real life job application.
+```git clone https://github.com/GotaloveCode/JobPortalLaravelProject.git```
 
-### Anyone interested in this project can edit and use. Also you can develop it more and don't hesitate to send me pull request.
+```composer install```
 
-## This Project is still under development.
+```copy .env.example and remove the extension .example```
+
+```Create database called 'jobportal'```
+
+```Import the database all users password are 'secret'```
+
