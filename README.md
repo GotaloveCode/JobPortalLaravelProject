@@ -4,6 +4,8 @@
 
 ```git clone https://github.com/GotaloveCode/JobPortalLaravelProject.git```
 
+```To install composer see-> http://webdevzoom.com/how-to-install-composer-on-windows/ ```
+
 ```composer install```
 
 ```copy .env.example and remove the extension .example```
