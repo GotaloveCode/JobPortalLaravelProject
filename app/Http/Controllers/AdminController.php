@@ -38,10 +38,12 @@ class AdminController extends Controller
         $jobs = Job::whereIn('city', $request->location)->get();
          return view('admin.admin_dashboard', compact('jobs'));
      }
+
      //show jobs by Search Keywords
      public function showJobsBySearchKeywords(Request $request){
         $jobs = Job::where('title', 'like', '%'.$request->searchQuery.'%')->get();
-         return view('admin.admin_dashboard', compact('jobs'));
+         $countries = getUniqueLocations();
+         return view('admin.admin_dashboard', compact('jobs','countries'));
      }
      //show all users
      public function showAllUsers(){

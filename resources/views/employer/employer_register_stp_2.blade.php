@@ -37,28 +37,13 @@
                         <div class="form-group">
                             <label for="country" class="col-sm-2 control-label">Country: </label>
                             <div class="col-sm-10">
-                                <select name="country" id="country" class="form-control">
-                                    <option value="Bangladesh">Bangladesh</option>
-                                    <option value="India">India</option>
-                                    <option value="USA">USA</option>
-                                    <option value="Australia">Australia</option>
-                                    <option value="Canada">Canada</option>
-                                </select>
+                                <input type="text" class="form-control" value="{{old('country')}}" name="country" id="country" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="city" class="col-sm-2 control-label">City: </label>
                             <div class="col-sm-10">
-                                <select name="city" id="city" class="form-control">
-                                    <option value="Dhaka">Dhaka</option>
-                                    <option value="Rajshahi">Rajshahi</option>
-                                    <option value="Chittagong">Chittagong</option>
-                                    <option value="Khulna">Khulna</option>
-                                    <option value="Sylhet">Sylhet</option>
-                                    <option value="Barisal">Barisal</option>
-                                    <option value="Dinajpur">Dinajpur</option>
-                                    <option value="Bogra">Bogra</option>
-                                </select>
+                                <input type="text" class="form-control" value="{{old('city')}}" name="city" id="city" required>
                             </div>
                         </div>
                         <div class="form-group">

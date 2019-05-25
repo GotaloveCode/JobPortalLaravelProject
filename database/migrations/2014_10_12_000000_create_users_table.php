@@ -20,9 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('phone')->default(0);
             $table->string('image')->nullable();
-            $table->tinyInteger('seeker')->default(0);
-            $table->tinyInteger('employer')->default(0);
-            $table->tinyInteger('admin')->default(0);
+            $table->boolean('seeker')->default(0);
+            $table->boolean('employer')->default(0);
+            $table->boolean('admin')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

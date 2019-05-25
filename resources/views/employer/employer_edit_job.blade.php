@@ -52,32 +52,19 @@
                             <label for="salary">Salary</label>
                             <select name="salary" class="form-control" id="salary">
                                 <option value="Negotiable"@if($jobData->salary == "Negotiable"){{' selected="selected"'}}@endif>Negotiable</option>
-                                <option value="0 - 25000 BDT"@if($jobData->salary == "0 - 25000 BDT"){{' selected="selected"'}}@endif>0 - 25000 BDT</option>
-                                <option value="25001 - 50000 BDT"@if($jobData->salary == "25001 - 50000 BDT"){{' selected="selected"'}}@endif>25001 - 50000 BDT</option>
-                                <option value="50001 - 75000 BDT"@if($jobData->salary == "50001 - 75000 BDT"){{' selected="selected"'}}@endif>50001 - 75000 BDT</option>
+                                <option value="0 - 25000"@if($jobData->salary == "0 - 25000"){{' selected="selected"'}}@endif>0 - 25000</option>
+                                <option value="25001 - 50000"@if($jobData->salary == "25001 - 50000"){{' selected="selected"'}}@endif>25001 - 50000</option>
+                                <option value="50001 - 75000"@if($jobData->salary == "50001 - 75000"){{' selected="selected"'}}@endif>50001 - 75000</option>
+                                <option value="Over 75000"@if($jobData->salary == "Over 75000"){{' selected="selected"'}}@endif>Over 75000</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="city">City</label>
-                            <select name="city" class="form-control" id="city">
-                                <option value="Dhaka"@if($jobData->city == "Dhaka"){{' selected="selected"'}}@endif>Dhaka</option>
-                                <option value="Rajshahi"@if($jobData->city == "Rajshahi"){{' selected="selected"'}}@endif>Rajshahi</option>
-                                <option value="Chittagong"@if($jobData->city == "Chittagong"){{' selected="selected"'}}@endif>Chittagong</option>
-                                <option value="Khulna"@if($jobData->city == "Khulna"){{' selected="selected"'}}@endif>Khulna</option>
-                                <option value="Barisal"@if($jobData->city == "Barisal"){{' selected="selected"'}}@endif>Barisal</option>
-                                <option value="Sylhet"@if($jobData->city == "Sylhet"){{' selected="selected"'}}@endif>Sylhet</option>
-                                <option value="Dinajpur"@if($jobData->city == "Dinajpur"){{' selected="selected"'}}@endif>Dinajpur</option>
-                                <option value="Bogra"@if($jobData->city == "Bogra"){{' selected="selected"'}}@endif>Bogra</option>
-                            </select>
+                            <input name="city" class="form-control" id="city" type="text" value="{{$jobData->city}}">
                         </div>
                         <div class="form-group">
                             <label for="country">Country</label>
-                            <select name="country" class="form-control" id="country">
-                                <option value="Bangladesh"@if($jobData->country == "Bangladesh"){{' selected="selected"'}}@endif>Bangladesh</option>
-                                <option value="India"@if($jobData->country == "India"){{' selected="selected"'}}@endif>India</option>
-                                <option value="USA"@if($jobData->country == "USA"){{' selected="selected"'}}@endif>USA</option>
-                                <option value="Canada"@if($jobData->country == "Canada"){{' selected="selected"'}}@endif>Canada</option>
-                            </select>
+                            <input name="country" class="form-control" id="country" type="text" value="{{$jobData->country}}">
                         </div>
                         <div class="form-group{{$errors->has('deadline')?' has-error':''}}">
                             <label for="deadline">Application Deadline</label>

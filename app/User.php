@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','seeker','employer','admin',
+        'name', 'email', 'password','seeker','employer','admin','image'
     ];
 
     /**
@@ -26,6 +26,19 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'seeker' => 'boolean',
+        'employer'  => 'boolean',
+        'admin'  => 'boolean'
+    ];
+
+
     public function isSeeker(){
         return $this->seeker;
     }
@@ -43,8 +56,18 @@ class User extends Authenticatable
     public function many_job(){
         return $this->belongsToMany(Job::class)->withTimestamps();
     }
+
+    //A Employer has many postings
+    public function postings(){
+        return $this->hasMany(Job::class);
+    }
     //User has one location
     public function activity(){
         return $this->hasOne(Activity::class);
+    }
+
+    public function setPasswordAttribute($value){
+        // only mutate if $value is not null
+        $this->attributes['password'] = !!$value?bcrypt($value):null;
     }
 }

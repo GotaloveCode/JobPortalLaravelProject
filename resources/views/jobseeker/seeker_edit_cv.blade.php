@@ -31,17 +31,7 @@
                         <div class="form-group">
                             <label for="location" class="col-sm-2 control-label">Lives in: </label>
                             <div class="col-sm-10">
-                                <select name="location" class="form-control" id="location">
-                                @foreach($activities as $activity)
-                                    <option value="Dhaka" @if($activity->location == "Dhaka"){{'selected="selected"'}}@endif>Dhaka</option>
-                                    <option value="Rajshahi"@if($activity->location == "Rajshahi"){{'selected="selected"'}}@endif>Rajshahi</option>
-                                    <option value="Chittagong"@if($activity->location == "Chittagong"){{'selected="selected"'}}@endif>Chittagong</option>
-                                    <option value="Sylhet"@if($activity->location == "Sylhet"){{'selected="selected"'}}@endif>Sylhet</option>
-                                    <option value="Barisal"@if($activity->location == "Barisal"){{'selected="selected"'}}@endif>Barisal</option>
-                                    <option value="Comilla"@if($activity->location == "Comilla"){{'selected="selected"'}}@endif>Comilla</option>
-                                    <option value="Dinajpur"@if($activity->location == "Dinajpur"){{'selected="selected"'}}@endif>Dinajpur</option>
-                                @endforeach
-                                </select>
+                                <input name="location" type="text" class="form-control" id="location" value="{{$activities->first()->location}}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -142,14 +132,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="country">Country</label>
-                                <select name="country" class="form-control" id="country">
-                                @foreach($activities as $activity)
-                                    <option value="Bangladesh"@if($activity->country == "Bangladesh"){{'selected="selected"'}}@endif>Bangladesh</option>
-                                    <option value="India"@if($activity->country == "India"){{'selected="selected"'}}@endif>India</option>
-                                    <option value="USA"@if($activity->country == "USA"){{'selected="selected"'}}@endif>USA</option>
-                                    <option value="Australia"@if($activity->country == "Australia"){{'selected="selected"'}}@endif>Australia</option>
-                                @endforeach
-                                </select>
+                                <input name="country" type="text" class="form-control" id="country" value="{{$activity->country}}">
                             </div>
                             <div class="form-group">
                                 <label for="language">Languages</label>
@@ -397,12 +380,7 @@
                             <div class="form-group">
                                 <label for="country" class="col-sm-2 control-label">Country:</label>
                                 <div class="col-sm-10">
-                                    <select name="country" class="form-control" id="country">
-                                        <option value="Bangladesh">Bangladesh</option>
-                                        <option value="India">India</option>
-                                        <option value="USA">USA</option>
-                                        <option value="Netherland">Netherland</option>
-                                    </select>
+                                    <input name="country" class="form-control" id="country" type="text">
                                 </div>
                             </div>
                             <div class="form-group">

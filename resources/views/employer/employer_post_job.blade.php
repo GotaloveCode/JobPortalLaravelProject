@@ -66,25 +66,11 @@
                         </div>
                         <div class="form-group">
                             <label for="city">City</label>
-                            <select name="city" class="form-control" id="city">
-                                <option value="Dhaka">Dhaka</option>
-                                <option value="Rajshahi">Rajshahi</option>
-                                <option value="Chittagong">Chittagong</option>
-                                <option value="Khulna">Khulna</option>
-                                <option value="Barisal">Barisal</option>
-                                <option value="Sylhet">Sylhet</option>
-                                <option value="Dinajpur">Dinajpur</option>
-                                <option value="Bogra">Bogra</option>
-                            </select>
+                            <input name="city" type="text" class="form-control" id="city">
                         </div>
                         <div class="form-group">
                             <label for="country">Country</label>
-                            <select name="country" class="form-control" id="country">
-                                <option value="Bangladesh">Bangladesh</option>
-                                <option value="India">India</option>
-                                <option value="USA">USA</option>
-                                <option value="Canada">Canada</option>
-                            </select>
+                            <input name="country" class="form-control" id="country" type="text">
                         </div>
                         <div class="form-group{{$errors->has('deadline')?' has-error':''}}">
                             <label for="deadline">Application Deadline</label>

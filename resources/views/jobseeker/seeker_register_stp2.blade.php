@@ -26,23 +26,7 @@
                         <div class="form-group">
                             <label for="inputPassword3" class="col-sm-4 control-label">Current Location:*</label>
                             <div class="col-sm-8">
-                                 <select name="location" class="form-control">
-                                    <option value="Dhaka">Dhaka</option>
-                                    <option value="Rajshahi">Rajshahi</option>
-                                    <option value="Chittagong">Chittagong</option>
-                                    <option value="Khulna">Khulna</option>
-                                    <option value="Barisal">Barisal</option>
-                                    <option value="Comilla">Comilla</option>
-                                    <option value="Bogra">Bogra</option>
-                                    <option value="Sylhet">Sylhet</option>
-                                    <option value="Joypurhat">Joypurhat</option>
-                                    <option value="Gazipur">Gazipur</option>
-                                    <option value="Mymensingh">Mymensingh</option>
-                                    <option value="Panchgarh">Panchgarh</option>
-                                    <option value="Bhola">Bhola</option>
-                                    <option value="Noakhali">Noakhali</option>
-                                    <option value="Cox's bazar">Cox's bazar</option>
-                                </select>
+                                 <input name="location" type="text" class="form-control">
                             </div>
                         </div>
                         

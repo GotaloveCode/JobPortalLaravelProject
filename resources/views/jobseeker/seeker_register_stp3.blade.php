@@ -34,12 +34,7 @@
                         </div>
                         <div class="form-group">
                             <label for="country">Country</label>
-                             <select name="country" class="form-control" id="country">
-                                <option value="Bangladesh">Bangladesh</option>
-                                <option value="India">India</option>
-                                <option value="USA">USA</option>
-                                <option value="Australia">Australia</option>
-                            </select>
+                            <input type="text" class="form-control" value="{{old('country')}}" name="country" id="country" required>
                         </div>
                          <div class="form-group">
                             <label for="language">Languages</label>

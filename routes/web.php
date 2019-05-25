@@ -34,8 +34,8 @@ Route::group(['middleware'=>['auth','seeker']], function(){
 	Route::post('seeker/attachment', 'SeekerController@attachments')->name('seeker.attachment');
 	Route::get('seeker/dashboard', 'SeekerController@showSeekerDashboard')->name('seeker.dashboard');
 	Route::get('seeker/cv-view', 'SeekerController@seekerCvView');
-	Route::get('seeker/job/apply/{id}', 'SeekerController@showApplyJobForm');
-	Route::get('seeker/apply/successfull/{id}', 'SeekerController@appliedToJob');
+	Route::get('seeker/job/apply/{job}', 'SeekerController@showApplyJobForm');
+	Route::post('seeker/job/apply/{job}', 'SeekerController@applyJob');
 	Route::get('seeker/job/delete/{id}', 'SeekerController@deleteJob');
 	Route::get('seeker/settings', 'SeekerController@showUserSettings')->name('seeker.settings');
 	Route::post('seeker/settings', 'SeekerController@storeUserSettings');
@@ -44,7 +44,7 @@ Route::group(['middleware'=>['auth','seeker']], function(){
 });
 
 Route::get('seeker/find-jobs', 'SeekerController@showFindJobs')->name('seeker.find_jobs');
-Route::get('seeker/job/view/{id}', 'SeekerController@viewJob');
+Route::get('seeker/job/view/{job}', 'SeekerController@viewJob')->name('view_job');
 Route::get('seeker/category-wise-jobs', 'SeekerController@showCategoryWiseJobs');
 Route::get('seeker/location-wise-jobs', 'SeekerController@showLocationWiseJobs');
 Route::get('seeker/keyword-wise-jobs', 'SeekerController@showJobsBySearchKeywords');
@@ -64,8 +64,11 @@ Route::group(['middleware'=>['auth', 'employer']], function(){
 	Route::get('/employer/job/delete/{id}', 'EmployerController@deleteJob');
 	Route::get('/employer/job/edit/{id}', 'EmployerController@showEditJobForm');
 	Route::post('/employer/job/store/{id}', 'EmployerController@storeEditedJob');
-	Route::get('/employer/job/view/{id}', 'EmployerController@viewJob');
-	Route::get('employer/application/{job_id}/delete/{id}', 'EmployerController@deleteApplication');
+	Route::get('/employer/job/view/{job}', 'EmployerController@viewJob')->name('employer.job');
+    Route::get('/employer/{job}/questions', 'EmployerController@showPostInterviewQuestionsForm')->name('employer.questions');
+    Route::post('/employer/{job}/questions', 'EmployerController@storePostedQuestions')->name('employer.post_questions');
+    Route::get('/employer/{job}/questions/view', 'EmployerController@viewQuestions')->name('employer.questions_view');;
+	Route::get('employer/application/{job}/delete/{id}', 'EmployerController@deleteApplication');
 	Route::get('/employer/view/seeker-cv/{id}', 'EmployerController@employerCvView');
 	Route::get('/employer/email/{id}', 'EmployerController@showEmailToSeekerForm');
 	Route::post('/employer/email/send', 'EmployerController@sendEmail');

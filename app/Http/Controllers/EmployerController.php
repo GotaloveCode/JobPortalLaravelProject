@@ -8,11 +8,14 @@ use App\Company;
 use App\Job;
 use App\Link;
 use App\Mail\MailToSeeker;
+use App\Question;
 use App\Skill;
 use App\User;
 use App\Work;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use PDF;
@@ -92,22 +95,62 @@ class EmployerController extends Controller
     	$newJob->experience = $request->experience;
     	$newJob->language = $request->language;
     	$newJob->skill = $request->skill;
-    	$newJob->posted = 1;
+    	$newJob->posted = 0;
+        $newJob->drafted = 1;
     	$newJob->user_id = Auth::id();
     	$newJob->save();
 
-    	return redirect()->route('employer.dashboard');
+    	return redirect()->route('employer.questions',[$newJob->id]);
+    }
+
+    //store Posted Questions
+    public function storePostedQuestions(Job $job,Request $request){
+
+        $this->validate($request, [
+            'question.*'=>'required',
+            'points.*'=>'required|min:1|max:10',
+            'answer.*'=>'required|in:1,0'
+        ]);
+
+        $questions = $request->input('question');
+        $points = $request->input('points');
+        $answers = $request->input('answer');
+        DB::transaction(function ()  use ($questions, $points, $answers, $job){
+            for ($i =0; $i < sizeof($questions); $i++){
+                Question::create([
+                    'job_id' => $job->id,
+                    'quest' => $questions[$i],
+                    'points' =>$points[$i],
+                    'answer' => $answers[$i]
+                ]);
+            }
+            $job->drafted = 0;
+            $job->posted = 1;
+            $job->save();
+        });
+
+        return redirect()->route('employer.dashboard')->with('alerts', [
+            ['type' => 'success', 'message' => "Questions posted successfully"]
+        ]);
+    }
+
+
+    //show Post Job Form
+    public function showPostInterviewQuestionsForm(Job $job){
+        return view('employer.interview_questions')->with(['job'=>$job]);
     }
     //show the Employer Dashboard 
     public function showEmployerDashboard(){
-    	$activeJobs = Job::where('user_id', Auth::id())->get();
-    	$user = User::where('id', Auth::id())->where('employer','1')->first();
+        $user = auth()->user();
+
+    	$activeJobs = $user->postings()->get();
+
     	$company = Company::where('user_id', Auth::id())->first();
     	return view('employer.employer_dashboard', compact('activeJobs','user','company'));
     }
     //Delete a Job from dashboard
-    public function deleteJob($id){
-    	$job = Job::where('id', $id)->delete();
+    public function deleteJob(Job $job){
+    	$job->delete();
     	return redirect()->route('employer.dashboard');
     }
     //show Edit job form 
@@ -131,11 +174,17 @@ class EmployerController extends Controller
     	return redirect()->route('employer.dashboard');
     }
     //View Job page for employer
-    public function viewJob($id){
-        $jobData = Job::find($id);
+    public function viewJob(Job $job){
+        $jobData = $job->load(['applicants']);
         $company = Company::where('user_id', Auth::id())->first();
         return view('employer.employer_job_view', compact('jobData','company'));
     }
+    //View Job page for employer
+    public function viewQuestions(Job $job){
+        $questions = $job->questions()->get();
+        return view('employer.questions_view', compact('questions','job'));
+    }
+
     //Delete a seeker's job Application from employer job view page
     public function deleteApplication($job_id, $id){
         $job = Job::find($job_id);

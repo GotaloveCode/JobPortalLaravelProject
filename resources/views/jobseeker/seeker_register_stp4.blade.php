@@ -104,12 +104,7 @@
                             <div class="form-group">
                                 <label for="country" class="col-sm-2 control-label">Country:</label>
                                 <div class="col-sm-10">
-                                    <select name="country" class="form-control" id="country">
-                                        <option value="Bangladesh">Bangladesh</option>
-                                        <option value="India">India</option>
-                                        <option value="USA">USA</option>
-                                        <option value="Netherland">Netherland</option>
-                                    </select>
+                                    <input name="country" class="form-control" id="country" type="text">
                                 </div>
                             </div>
                             <div class="form-group">

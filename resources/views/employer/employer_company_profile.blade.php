@@ -35,30 +35,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="country" class="col-sm-2 control-label">Country: </label>
-                            <div class="col-sm-10">
-                                <select name="country" id="country" class="form-control">
-                                    <option value="Bangladesh"@if($company->country == "Bangladesh"){{'selected="selected"'}}@endif>Bangladesh</option>
-                                    <option value="India"@if($company->country == "India"){{'selected="selected"'}}@endif>India</option>
-                                    <option value="USA"@if($company->country == "USA"){{'selected="selected"'}}@endif>USA</option>
-                                    <option value="Australia"@if($company->country == "Australia"){{'selected="selected"'}}@endif>Australia</option>
-                                    <option value="Canada"@if($company->country == "Canada"){{'selected="selected"'}}@endif>Canada</option>
-                                </select>
-                            </div>
+                            <label for="country" class="control-label">Country: </label>
+                            <input type="text" class="form-control" value="{{$company->country}}" name="country" id="country" required>
                         </div>
                         <div class="form-group">
                             <label for="city" class="col-sm-2 control-label">City: </label>
                             <div class="col-sm-10">
-                                <select name="city" id="city" class="form-control">
-                                    <option value="Dhaka"@if($company->city == "Dhaka"){{'selected="selected"'}}@endif>Dhaka</option>
-                                    <option value="Rajshahi"@if($company->city == "Rajshahi"){{'selected="selected"'}}@endif>Rajshahi</option>
-                                    <option value="Chittagong"@if($company->city == "Chittagong"){{'selected="selected"'}}@endif>Chittagong</option>
-                                    <option value="Khulna"@if($company->city == "Khulna"){{'selected="selected"'}}@endif>Khulna</option>
-                                    <option value="Sylhet"@if($company->city == "Sylhet"){{'selected="selected"'}}@endif>Sylhet</option>
-                                    <option value="Barisal"@if($company->city == "Barisal"){{'selected="selected"'}}@endif>Barisal</option>
-                                    <option value="Dinajpur"@if($company->city == "Dinajpur"){{'selected="selected"'}}@endif>Dinajpur</option>
-                                    <option value="Bogra"@if($company->city == "Bogra"){{'selected="selected"'}}@endif>Bogra</option>
-                                </select>
+                                <input type="text" class="form-control" value="{{$company->city}}" name="city" id="city" required>
                             </div>
                         </div>
                         <div class="form-group">

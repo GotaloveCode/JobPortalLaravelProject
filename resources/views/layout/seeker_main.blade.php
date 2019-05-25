@@ -79,7 +79,7 @@
         <!-- first .contaienr-fluid ends here -->
     </header>
         {{-- Navbar Ends here --}}
-
+    @include('partials.notifier')
         @section('content')
             @show
 

@@ -23,7 +23,7 @@ class CreateActivitiesTable extends Migration
             $table->string('grade')->nullable();
             $table->string('language')->nullable();
             $table->string('interest')->nullable();
-            $table->string('country')->default('Bangladesh');
+            $table->string('country')->default('Kenya');
             $table->string('about_me')->nullable();
             $table->string('gender')->nullable();
             $table->timestamps();

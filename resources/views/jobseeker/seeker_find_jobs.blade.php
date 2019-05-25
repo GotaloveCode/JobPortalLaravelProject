@@ -32,56 +32,13 @@
                         <div class="panel-body">
                             <form action="/seeker/location-wise-jobs" method="get">
                             {{csrf_field()}}
+                                @foreach($countries as $country)
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="location[]" value="Dhaka"> Dhaka
+                                        <input type="checkbox" name="location[]" value="{{$country}}"> {{$country}}
                                     </label>
                                 </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="location[]" value="Rajshahi"> Rajshahi
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="location[]" value="Chittagong"> Chittagong
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="location[]" value="Sylhet"> Sylhet
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="location[]" value="Barisal"> Barisal
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="location[]" value="Dinajpur"> Dinajpur
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="location[]" value="Rangpur"> Rangpur
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="location[]" value="Mymensingh"> Mymensingh
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="location[]" value="Khulna"> Khulna
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="location[]" value="Comilla"> Comilla
-                                    </label>
-                                </div>
+                                @endforeach
                                     <div class="form-group">
                                         <div class="col-sm-10">
                                             <input type="submit" class="btn btn-warning" value="Search" />
@@ -174,7 +131,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-lg-4"><i class="fa fa-eye-slash"></i> {{$job->user->company->name}}</div> 
+                                <div class="col-lg-4"><i class="fa fa-eye-slash"></i> {{$job->employer->company->name}}</div>
                                 {{-- here the relationship is job belongs to one user->and user has one company --}}
                                 <div class="col-lg-4"><i class="fa fa-location-arrow"></i> {{$job->city}}</div>
                                 <div class="col-lg-4">

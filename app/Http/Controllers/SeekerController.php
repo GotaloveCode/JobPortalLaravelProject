@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Activity;
+use App\Answer;
 use App\Attachment;
 use App\Company;
 use App\Job;
 use App\Link;
+use App\Mail\CustomMail;
 use App\Skill;
 use App\User;
 use App\Work;
+use Carbon\Carbon;
 use Illuminate\Filesystem\putFileAs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class SeekerController extends Controller
@@ -21,7 +26,7 @@ class SeekerController extends Controller
     	$this->validate($request, [
     		'phone' => 'required|max:14',
     		]);
-    	User::where('id', Auth::id())->update(['phone'=>$request->phone]);
+        auth()->user()->update(['phone'=>$request->phone]);
 
     	$personalInfo = new Activity;
     	//If this user id doesn't exist then create one row with this 'user_id' in Activity table
@@ -86,7 +91,7 @@ class SeekerController extends Controller
     public function showEditCv(){
     	$works = Work::where('user_id', Auth::id())->get();
     	$skills = Skill::where('user_id', Auth::id())->get();
-    	$user = User::find(Auth::id());
+    	$user = auth()->user();
     	$activities = Activity::where('user_id', Auth::id())->get();
     	$links = Link::where('user_id', Auth::id())->get();
     	$attachments = Attachment::where('user_id', Auth::id())->get();
@@ -95,7 +100,7 @@ class SeekerController extends Controller
     }
     //store Edit_CV personal data
     public function storeEditCv(Request $request){
-    	$user = User::where('id', Auth::id())->update(['name'=>$request->name,'phone'=>$request->phone]);
+    	$user = auth()->user()->update(['name'=>$request->name,'phone'=>$request->phone]);
     	$activities = Activity::where('user_id', Auth::id())->update(['location'=>$request->location,'gender'=>$request->gender]);
     	
     	return $request->all();
@@ -104,11 +109,11 @@ class SeekerController extends Controller
     public function profileImageUpload(Request $request){
     	$pro_image = $request->file('proimage');
     	if($request->hasFile('proimage')){
-    		$proimage_original_name = $pro_image->getClientOriginalName();
-    		Storage::putFileAs('public/images', $pro_image, $proimage_original_name);
+    		$pic = auth()->id().".".$pro_image->getClientOriginalExtension();
+    		Storage::putFileAs('public/images', $pro_image, $pic);
+            auth()->user()->update(['image' => $pic]);
     	}
-    	User::where('id', Auth::id())->update(['image'=>$proimage_original_name]);
-	    
+
     	return redirect()->route('seeker.edit_cv');
     }
     //store About me function data
@@ -144,7 +149,7 @@ class SeekerController extends Controller
     }
     //Show seeker Dashboard page
     public function showSeekerDashboard(){
-    	$user = User::find(Auth::id());
+    	$user = auth()->user();
     	return view('jobseeker.seeker_dashboard', compact('user'));
     }
     //show CV view page
@@ -162,32 +167,92 @@ class SeekerController extends Controller
     	return view('jobseeker.index');
     }
     //Seeker Job view page
-    public function viewJob($id){
+    public function viewJob(Job $job){
         $user = auth()->user();
-        $job = $user->many_job()->where('job_id',$id)->first();
+        $userjob = null;
+        if($user){
+            $userjob = $job->applicants()->where('user_id',$user->id)->first();
+        }
         $applied = false;
-        if($job){
+        if($userjob){
             $applied = true;
         }
-        $jobData = Job::find($id);
+        $jobData = $job->load(['employer.company']);
         return view('jobseeker.seeker_job_view', compact('jobData','applied'));
     }
      //Shows the Find jobs page with available jobs
     public function showFindJobs(){
-        $jobs = Job::where('posted', 1)->get();
-        return view('jobseeker.seeker_find_jobs', compact('jobs'));
+        $jobs = Job::where('posted', 1)->whereDate('deadline','>=',Carbon::today())
+            ->with(['employer','employer.company'])->get();
+        $countries = getUniqueLocations();
+        return view('jobseeker.seeker_find_jobs', compact('jobs','countries'));
     }
     //show Apply to a Job Form
-    public function showApplyJobForm($id){
-        $job = Job::find($id);
-        $user = User::find(Auth::id());
+    public function showApplyJobForm(Job $job){
+        $job = $job->load('questions');
+        $user = auth()->user();
         return view('jobseeker.seeker_apply_now', compact('job','user'));
     }
     //successfully Applied to Job
-    public function appliedToJob($id){
-        $user = User::find(Auth::id());
-        $user->many_job()->attach($id);
-        return redirect()->route('seeker.find_jobs');
+    public function applyJob(Request $request,Job $job){
+        $question_count = $job->questions()->count();
+        $answers = $request->except('_token');
+        if(sizeof($answers) != $question_count){
+            $validator = \Validator::make([], []); // Empty data and rules fields
+            $validator->errors()->add("answer",'Please fill all the questions');
+            return redirect()->back()
+                ->withErrors($validator->errors())
+                ->withInput($request->all());
+        }
+        $question_ids = $job->questions()->pluck('questions.id')->toArray();
+        if(sizeof(array_diff($question_ids,array_keys($answers))) > 0){
+            $validator = \Validator::make([], []); // Empty data and rules fields
+            $validator->errors()->add("answer",'Please fill all the questions');
+            return redirect()->back()
+                ->withErrors($validator->errors())
+                ->withInput($request->all());
+        }
+        $questions = $job->questions()->get();
+        $total = $questions->sum('points');
+        $points = 0;
+
+        DB::transaction(function () use ($answers,$questions,$points,$total,$job){
+            foreach ($answers as $key => $value) {
+                $points += $this->getScore($questions,$key,$value);
+                Answer::create([
+                    'question_id' => $key,
+                    'user_id' => auth()->id(),
+                    'value' => $value
+                ]);
+            }
+            $job->applicants()->attach(auth()->id(),['points' => $points,'total' => $total]);
+        });
+//send mail to employer
+        $user = auth()->user();
+        $employer = $job->employer()->first();
+        $subject = "New Job Applicant for {$job->title}";
+        $body = "Dear {$employer->name},\n {$user->name} has applied for the job {$job->title} you posted";
+
+        Mail::to($employer)->send(new CustomMail($subject, $body, []));
+
+        $admins = User::where('admin',1)->get();
+
+        $body = "Dear Admin,\n {$user->name} has applied for the job {$job->title} posted by {$employer->name}";
+        Mail::to($admins)->send(new CustomMail($subject, $body, []));
+
+        return redirect()->route('seeker.dashboard')->with('alerts', [
+            ['type' => 'success', 'message' => "Job application successful"]
+        ]);
+    }
+
+    function getScore($questions,$question_id,$answer_given){
+        //get question
+        $question = $questions->where('id',$question_id)->first();
+        //get points on question if values match
+        if($question->answer == $answer_given){
+            return $question->points;
+        }
+        return 0;
     }
     //seeker delete an applied job from dashboard
     public function deleteJob($id){
@@ -197,27 +262,37 @@ class SeekerController extends Controller
      } 
      //Show Category wise jobs
      public function showCategoryWiseJobs(Request $request){
-        $jobs = Job::whereIn('industry', $request->category)->get();
-         return view('jobseeker.seeker_find_jobs', compact('jobs'));
+        $jobs = Job::whereIn('industry', $request->category)
+            ->with(['employer','employer.company'])->get();
+         $countries = getUniqueLocations();
+         return view('jobseeker.seeker_find_jobs', compact('jobs','countries'));
      }
      //show Location wise jobs
      public function showLocationWiseJobs(Request $request){
-        $jobs = Job::whereIn('city', $request->location)->get();
-         return view('jobseeker.seeker_find_jobs', compact('jobs'));
+        $jobs = Job::whereIn('city', $request->location)->with(['employer','employer.company'])->get();
+         $countries = getUniqueLocations();
+         return view('jobseeker.seeker_find_jobs', compact('jobs','countries'));
      }
+
      //show jobs by Search Keywords
      public function showJobsBySearchKeywords(Request $request){
-        $jobs = Job::where('title', 'like', '%'.$request->searchQuery.'%')->get();
-         return view('jobseeker.seeker_find_jobs', compact('jobs'));
+        $jobs = Job::whereDate('deadline','>=',Carbon::today())
+            ->where('title', 'like', '%'.$request->searchQuery.'%')
+            ->orwhere('industry','like'.'%'.$request->searchQuery.'%')
+            ->orwhere('city','like'.'%'.$request->searchQuery.'%')
+            ->with(['employer','employer.company'])
+            ->get();
+         $countries = getUniqueLocations();
+         return view('jobseeker.seeker_find_jobs', compact('jobs','countries'));
      }
      //show seeker  Settings
      public function showUserSettings(){
-        $user = User::find(Auth::id());
+        $user = auth()->user();
           return view('jobseeker.seeker_setting', compact('user'));
       } 
       //store seeker settings
       public function storeUserSettings(Request $request){
-        $user = User::find(Auth::id());
+        $user = auth()->user();
         $old_password = bcrypt($request->old_password);
         echo $old_password;
         $new_password = $request->new_password;

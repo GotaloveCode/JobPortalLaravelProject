@@ -15,9 +15,12 @@ class CreateJobUserTable extends Migration
     {
         Schema::create('job_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('job_id');
-            $table->integer('user_id');
+            $table->unsignedInteger('job_id');
+            $table->foreign('job_id')->references('id')->on('jobs');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
+            $table->unique(['user_id', 'job_id']);
         });
     }
 

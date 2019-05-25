@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <section class="top" style="margin-top: 100px;">
+    <section class="top" style="margin-top: 60px;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-2">
@@ -32,9 +32,6 @@
                     </ul>
 
                     <div id="myApplications">
-                        <br>
-                        <p><strong>My Applications</strong></p>
-                        <br>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -52,11 +49,10 @@
                             @foreach($user->many_job as $job)
                                 <tr>
                                     <td>{{$job->title}}</td>
-                                    <td>{{$job->user->company->name}}</td>
+                                    <td>{{$job->employer->company->name}}</td>
                                     <td>{{$job->industry}}</td>
                                     <td>{{$job->city}}</td>
-                                    <td>{{$job->pivot->created_at->format('d-M-Y')}}</td>
-                                    <td><a href="/seeker/job/delete/{{$job->id}}" class="btn btn-warning" style="border-radius: 0;"><i class="fa fa-trash"></i> DELETE</a></td>
+                                    <td>{{ $job->pivot->created_at ? $job->pivot->created_at->format('d-M-Y') : '' }}</td>
                                     <td><a href="/seeker/job/view/{{$job->id}}" class="btn btn-default" style="border-radius: 0;"><i class="fa fa-eye"></i> VIEW APPLICATION</a></td>
                                 </tr>
                             @endforeach

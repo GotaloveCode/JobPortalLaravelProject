@@ -5,7 +5,7 @@
 @section('content')
     <section id="home_first_section" class="top">
         <div class="container-fluid">
-            <h1 class="first_sec_h1">Build the Future of Bangladesh</h1>
+            <h1 class="first_sec_h1">Build the Future of our Nation</h1>
             <div class="container home_search">
                 <div class="row">
                     <div class="col-lg-6 col-lg-offset-3">

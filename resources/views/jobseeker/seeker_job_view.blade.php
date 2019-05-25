@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-lg-12">
                   <h3>{{$jobData->title}}</h3>
-                <p><i class="fa fa-eye-slash"></i> {{$jobData->user->company->name}}</p>
+                <p><i class="fa fa-eye-slash"></i> {{$jobData->employer->company->name}}</p>
                 <p><strong>Application Deadline: </strong>{{$jobData->deadline}}</p>
                 
                 <div class="row">
@@ -31,7 +31,7 @@
                         <div>
                             <h4><strong>Company Details</strong></h4><hr>
                             <p><strong>Company Industry: </strong>{{$jobData->industry}}</p>
-                            <p><strong>Company website: </strong><a href="http://{{$jobData->user->company->website}}" target="_blank">{{$jobData->user->company->website}}</a></p>
+                            <p><strong>Company website: </strong><a href="http://{{$jobData->employer->company->website}}" target="_blank">{{$jobData->employer->company->website}}</a></p>
                         </div><br><br>
                         <div>
                             <h4><strong>Professional Skills</strong></h4><hr>
@@ -56,7 +56,7 @@
                     
                     <div>
                         <h4><strong>About Company</strong></h4><hr>
-                        <p>{{$jobData->user->company->about}}</p>
+                        <p>{{$jobData->employer->company->about}}</p>
                     </div><br>
                     
                     <div class="row">

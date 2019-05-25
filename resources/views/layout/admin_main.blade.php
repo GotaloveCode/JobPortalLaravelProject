@@ -77,7 +77,7 @@
         <!-- first .contaienr-fluid ends here -->
     </header>
     <!--Nav Ends Here -->
-   
+    @include('partials.notifier')
     @section('content')
         @show
     

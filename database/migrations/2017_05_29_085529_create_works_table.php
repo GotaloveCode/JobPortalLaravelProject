@@ -15,8 +15,9 @@ class CreateWorksTable extends Migration
     {
         Schema::create('works', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->tinyInteger('no_experience')->default(0);
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->boolean('no_experience')->default(0);
             $table->string('job_title')->nullable();
             $table->string('company_name')->nullable();
             $table->string('country')->nullable();

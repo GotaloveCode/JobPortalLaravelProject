@@ -6,9 +6,19 @@
         <div class="row">
             <div class="col-lg-12">
                 <h3>{{$jobData->title}}</h3>
-                <p><i class="fa fa-eye-slash"></i> {{$company->name}}</p>
-                <p><strong>Application Deadline: </strong>{{$jobData->deadline}}</p>
-                
+                <div class="row">
+                    <div class="col-md-8">
+                        <p><i class="fa fa-eye-slash"></i> {{$company->name}}</p>
+                        <p><strong>Application Deadline: </strong>{{$jobData->deadline}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        @if($jobData->posted)
+                           <a class="btn btn-success" href="{{route('employer.questions_view',[$jobData->id])}}"><i class="glyphicon glyphicon-eye"></i> View Questions</a>
+                        @else
+                            <a class="btn btn-warning" href="{{route('employer.questions',[$jobData->id])}}"><i class="glyphicon glyphicon-exclamation-sign"></i> Post Questions</a>
+                        @endif
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-lg-6">
                         <div>
@@ -77,13 +87,14 @@
                             </thead>
 
                             <tbody>
-                            @foreach($jobData->many_user as $user)
+                            @foreach($jobData->applicants as $user)
                                 <tr>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->phone}}</td>
                                     <td>{{$user->activity->location}}</td>
-                                    <td>{{$user->pivot->created_at->format('d-M-Y')}}</td>
+                                    <td>{{$user->pivot->created_at ? $user->pivot->created_at->format('d-M-Y') : ''}}</td>
+                                    <td>{{$user->pivot->points}}/{{$user->pivot->total}}</td>
                                     <td><a href="/employer/application/{{$jobData->id}}/delete/{{$user->id}}" class="btn btn-warning" style="border-radius: 0;"><i class="fa fa-trash"></i> DELETE</a></td>
                                     <td><a href="/employer/view/seeker-cv/{{$user->id}}" class="btn btn-default" style="border-radius: 0;"><i class="fa fa-eye"></i> VIEW CV</a></td>
                                      <td><a href="/employer/email/{{$user->id}}" class="btn btn-default" style="border-radius: 0;"><i class="fa fa-envelope"></i> EMAIL</a></td>
