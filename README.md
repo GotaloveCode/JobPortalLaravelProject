@@ -12,3 +12,4 @@
 
 ```Import the database all users password are 'secret'```
 
+```To run project type 'php artisan serve' ```
