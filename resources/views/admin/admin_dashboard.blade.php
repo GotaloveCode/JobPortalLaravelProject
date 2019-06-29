@@ -32,7 +32,7 @@
                         <div class="panel-body">
                             <form action="/admin/location-wise-jobs" method="get">
                             {{csrf_field()}}
-                                @foreach($countries as $country)
+                                @foreach($job->country as $country)
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="location[]" value="{{$country}}"> {{$country}}

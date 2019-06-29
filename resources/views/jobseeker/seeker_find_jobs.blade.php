@@ -6,7 +6,7 @@
 
     <section class="top" style="margin-top: 100px;">
         <div class="container">
-        <form action="/seeker/keyword-wise-jobs" method="get">
+        <form action="{{route('showJobsBySearchKeywords')}}" method="get">
         {{csrf_field()}}
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-4">
@@ -30,7 +30,7 @@
                             <h3 class="panel-title">Job Location</h3>
                         </div>
                         <div class="panel-body">
-                            <form action="/seeker/location-wise-jobs" method="get">
+                            <form action="{{ route('showLocationWiseJobs') }}" method="get">
                             {{csrf_field()}}
                                 @foreach($countries as $country)
                                 <div class="checkbox">
@@ -53,7 +53,7 @@
                             <h3 class="panel-title">Category/Industry</h3>
                         </div>
                         <div class="panel-body">
-                            <form action="/seeker/category-wise-jobs" method="get">
+                            <form action="{{route('showCategoryWiseJobs')}}" method="get">
                             {{csrf_field()}}
                                 <div class="checkbox">
                                     <label>
@@ -137,7 +137,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <div class="col-sm-offset-6 col-sm-10">
-                                            <a href="/seeker/job/view/{{$job->id}}" target="_blank" class="btn btn-warning">VIEW</a>
+                                            <a href="{{route('view_job',$job->id)}}" target="_blank" class="btn btn-warning">VIEW</a>
                                         </div>
                                     </div>
                                 </div>

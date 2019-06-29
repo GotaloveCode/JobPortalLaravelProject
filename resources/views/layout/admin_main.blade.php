@@ -21,7 +21,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="/employer"><i class="fa fa-suitcase"></i> Job Board</a>
+                        <a class="navbar-brand" href="{{route('employer')}}"><i class="fa fa-suitcase"></i> Job Board</a>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -29,11 +29,10 @@
                         <div class="row">
                             <div class="col-lg-6 col-lg-offset-2">
                                 <ul class="nav navbar-nav ">
-                                    
                                     @if(!Auth::guest())
-                                    <li><a href="/admin/dashboard">Dashboard</a></li>
-                                    <li><a href="/admin/users">Users</a></li>
-                                    <li><a href="/admin/cv-list">CV Search</a></li>
+                                    <li><a href="{{route('admin.dashboard')}}">Dashboard</a></li>
+                                    <li><a href="{{route(' admin.all_users')}}">Users</a></li>
+                                    <li><a href="{{route(' all_cv')}}">CV Search</a></li>
                                     @endif
                                     
                                 </ul>
@@ -106,7 +105,7 @@
                     <h5>About Us</h5>
                     <p><a href="">About us</a></p>
                     <p><a href="">Privacy policy</a></p>
-                    <p><a href="/contact">Contact Us</a></p>
+                    <p><a href="{{route('contact')}}">Contact Us</a></p>
                 </div>
                  <div class="col-lg-3 social">
                     <a href="https://www.facebook.com/smkpobonru" target="_blank" id="a1"><i class="fa fa-facebook"></i></a>

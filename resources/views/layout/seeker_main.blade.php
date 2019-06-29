@@ -22,7 +22,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="/"><i class="fa fa-suitcase"></i> Job Board</a>
+                        <a class="navbar-brand" href="{{route('home')}}"><i class="fa fa-suitcase"></i> Job Board</a>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -30,9 +30,9 @@
                         <div class="row">
                             <div class="col-lg-5 col-lg-offset-3">
                                 <ul class="nav navbar-nav ">
-                                    <li class=""><a href="/">Home <span class="sr-only">(current)</span></a></li>
+                                    <li class=""><a href="{{route('home')}}">Home <span class="sr-only">(current)</span></a></li>
                                     @if(!Auth::guest())
-                                        <li><a href="/seeker/dashboard">Dashboard</a></li>
+                                        <li><a href="{{route('seeker.dashboard')}}">Dashboard</a></li>
                                         <li><a href="{{route('seeker.edit_cv')}}">My CV</a></li>
                                         <li><a href="{{route('seeker.settings')}}">Settings</a></li>
                                     @endif
@@ -45,7 +45,7 @@
                         @if (Auth::guest())
                             <li><a href="{{ route('seeker.login') }}">Login</a></li>
                             <li><a href="{{ route('seeker.register') }}">Sign Up</a></li>
-                            <li id="for_emp"><a href="/employer">For Employer</a></li>
+                            <li id="for_emp"><a href="{{ route('employer') }}">For Employer</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -107,12 +107,12 @@
                     <h5>About Us</h5>
                     <p><a href="">About us</a></p>
                     <p><a href="">Privacy policy</a></p>
-                    <p><a href="/contact">Contact Us</a></p>
+                    <p><a href="{{route('contact')}}">Contact Us</a></p>
                 </div>
                 <div class="col-lg-3 social">
-                    <a href="https://www.facebook.com/smkpobonru" target="_blank" id="a1"><i class="fa fa-facebook"></i></a>
-                    <a href="https://www.twitter.com/smkpobon" target="_blank" id="a2"><i class="fa fa-twitter"></i></a>
-                    <a href="https://www.google-plus.com/smkpobonru" target="_blank" id="a3"><i class="fa fa-google-plus"></i></a>
+                    <a href="https://www.facebook.com/" target="_blank" id="a1"><i class="fa fa-facebook"></i></a>
+                    <a href="https://www.twitter.com/" target="_blank" id="a2"><i class="fa fa-twitter"></i></a>
+                    <a href="https://www.google-plus.com/" target="_blank" id="a3"><i class="fa fa-google-plus"></i></a>
                 </div>
             </div>
             <div class="row">

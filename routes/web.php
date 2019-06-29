@@ -12,7 +12,7 @@
 */
 
 //Job seeker normal routes
-Route::get('/', 'SeekerController@index');
+Route::get('/', 'SeekerController@index')->name('home');
 
 Route::group(['middleware'=>['auth','seeker']], function(){
 	Route::get('personal-info', function(){
@@ -33,8 +33,8 @@ Route::group(['middleware'=>['auth','seeker']], function(){
 	Route::post('seeker/links', 'SeekerController@links')->name('seeker.link');
 	Route::post('seeker/attachment', 'SeekerController@attachments')->name('seeker.attachment');
 	Route::get('seeker/dashboard', 'SeekerController@showSeekerDashboard')->name('seeker.dashboard');
-	Route::get('seeker/cv-view', 'SeekerController@seekerCvView');
-	Route::get('seeker/job/apply/{job}', 'SeekerController@showApplyJobForm');
+	Route::get('seeker/cv-view', 'SeekerController@seekerCvView')->name('seeker.cv');
+	Route::get('seeker/job/apply/{job}', 'SeekerController@showApplyJobForm')->name('showApplyJobForm');
 	Route::post('seeker/job/apply/{job}', 'SeekerController@applyJob');
 	Route::get('seeker/job/delete/{id}', 'SeekerController@deleteJob');
 	Route::get('seeker/settings', 'SeekerController@showUserSettings')->name('seeker.settings');
@@ -45,14 +45,14 @@ Route::group(['middleware'=>['auth','seeker']], function(){
 
 Route::get('seeker/find-jobs', 'SeekerController@showFindJobs')->name('seeker.find_jobs');
 Route::get('seeker/job/view/{job}', 'SeekerController@viewJob')->name('view_job');
-Route::get('seeker/category-wise-jobs', 'SeekerController@showCategoryWiseJobs');
-Route::get('seeker/location-wise-jobs', 'SeekerController@showLocationWiseJobs');
-Route::get('seeker/keyword-wise-jobs', 'SeekerController@showJobsBySearchKeywords');
+Route::get('seeker/category-wise-jobs', 'SeekerController@showCategoryWiseJobs')->name('showCategoryWiseJobs');
+Route::get('seeker/location-wise-jobs', 'SeekerController@showLocationWiseJobs')->name('showLocationWiseJobs');
+Route::get('seeker/keyword-wise-jobs', 'SeekerController@showJobsBySearchKeywords')->name('showJobsBySearchKeywords');
 
-Route::get('/contact', 'SeekerController@contact');
+Route::get('contact', 'SeekerController@contact')->name('contact');
 //--------------------------------------------------------------------------------------------
 //Employer normal routes
-Route::get('/employer', 'EmployerController@index');
+Route::get('employer', 'EmployerController@index')->name('employer');
 
 Route::group(['middleware'=>['auth', 'employer']], function(){
 	Route::get('/employer/company-profile', 'EmployerController@createCompanyProfile')->name('employer.company_profile');
@@ -61,8 +61,8 @@ Route::group(['middleware'=>['auth', 'employer']], function(){
 	Route::get('/employer/post-job', 'EmployerController@showPostJobForm')->name('employer.post_job');
 	Route::post('/employer/post-job', 'EmployerController@storePostedJob');
 	Route::get('/employer/dashboard', 'EmployerController@showEmployerDashboard')->name('employer.dashboard');
-	Route::get('/employer/job/delete/{id}', 'EmployerController@deleteJob');
-	Route::get('/employer/job/edit/{id}', 'EmployerController@showEditJobForm');
+	Route::get('/employer/job/delete/{id}', 'EmployerController@deleteJob')->name('job.delete');
+	Route::get('/employer/job/edit/{id}', 'EmployerController@showEditJobForm')->name('job.edit');
 	Route::post('/employer/job/store/{id}', 'EmployerController@storeEditedJob');
 	Route::get('/employer/job/view/{job}', 'EmployerController@viewJob')->name('employer.job');
     Route::get('/employer/{job}/questions', 'EmployerController@showPostInterviewQuestionsForm')->name('employer.questions');
@@ -81,7 +81,7 @@ Route::group(['middleware'=>['auth', 'employer']], function(){
 //Admin normal routes
 Route::group(['prefix'=>'admin', 'middleware'=>['auth','admin']], function(){
 	Route::get('/', 'AdminController@dashboard');
-	Route::get('/dashboard', 'AdminController@dashboard');
+	Route::get('/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
 	Route::get('/job/view/{id}', 'AdminController@viewJob');
 	Route::get('/job/delete/{id}', 'AdminController@deleteJob');
 	Route::get('/category-wise-jobs', 'AdminController@showCategoryWiseJobs');

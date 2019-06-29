@@ -15,7 +15,7 @@
                     <p>Welcome to your personal workspace</p>
                     <div>
                         <a href="{{route('seeker.edit_cv')}}" class="btn btn-warning" style="border-radius: 0;"><i class="fa fa-pencil-square-o"></i> EDIT MY CV</a>
-                        <a href="/seeker/cv-view" class="btn btn-default" style="border-radius: 0;"><i class="fa fa-eye"></i> VIEW MY CV</a>
+                        <a href="{{route('seeker.cv')}}" class="btn btn-default" style="border-radius: 0;"><i class="fa fa-eye"></i> VIEW MY CV</a>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                                     <td>{{$job->industry}}</td>
                                     <td>{{$job->city}}</td>
                                     <td>{{ $job->pivot->created_at ? $job->pivot->created_at->format('d-M-Y') : '' }}</td>
-                                    <td><a href="/seeker/job/view/{{$job->id}}" class="btn btn-default" style="border-radius: 0;"><i class="fa fa-eye"></i> VIEW APPLICATION</a></td>
+                                    <td><a href="{{route('view_job',$job->id)}}" class="btn btn-default" style="border-radius: 0;"><i class="fa fa-eye"></i> VIEW APPLICATION</a></td>
                                 </tr>
                             @endforeach
                             </tbody>

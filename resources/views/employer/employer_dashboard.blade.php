@@ -20,7 +20,7 @@
                     <p>Welcome to your company's workspace [ <strong>{{$user->name}}</strong> ]</p>
                     <div>
                         <a href="{{route('employer.post_job')}}" class="btn btn-warning" style="border-radius: 0;"><i class="fa fa-arrow-circle-up"></i> POST A JOB</a>
-                        <a href="/employer/cv-list" class="btn btn-default" style="border-radius: 0;"><i class="fa fa-database"></i> SEARCH CV DATABASE</a>
+                        <a href="{{route('employer_cv_view')}}" class="btn btn-default" style="border-radius: 0;"><i class="fa fa-database"></i> SEARCH CV DATABASE</a>
                     </div>
                 </div>
             </div>
@@ -59,9 +59,9 @@
                                     <td>{{$job->industry}}</td>
                                     <td>{{$job->created_at->format('d-m-Y')}}</td>
                                     <td>{{$job->deadline}}</td>
-                                    <td><a href="/employer/job/delete/{{$job->id}}" class="btn btn-danger" style="border-radius: 0;"><i class="fa fa-trash"></i> DELETE</a></td>
-                                    <td><a href="/employer/job/view/{{$job->id}}" class="btn btn-default" style="border-radius: 0;"><i class="fa fa-eye"></i> VIEW JOB</a></td>
-                                    <td><a href="/employer/job/edit/{{$job->id}}" class="btn btn-warning" style="border-radius: 0;"><i class="fa fa-edit"></i> EDIT</a></td>
+                                    <td><a href="{{route('job.delete',$job->id)}}" class="btn btn-danger" style="border-radius: 0;"><i class="fa fa-trash"></i> DELETE</a></td>
+                                    <td><a href="{{route('employer.job',$job->id)}}" class="btn btn-default" style="border-radius: 0;"><i class="fa fa-eye"></i> VIEW JOB</a></td>
+                                    <td><a href="{{route('job.edit',$job->id) }}" class="btn btn-warning" style="border-radius: 0;"><i class="fa fa-edit"></i> EDIT</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>

@@ -70,7 +70,7 @@
                             @else
                                 <div class="form-group">
                                     <div class="col-sm-offset-6 col-sm-10">
-                                        <a href="/seeker/job/apply/{{$jobData->id}}" class="btn btn-warning">
+                                        <a href="{{ route('showApplyJobForm',$jobData->id)}}" class="btn btn-warning">
                                             APPLY NOW
                                         </a><br><br>
                                     </div>
